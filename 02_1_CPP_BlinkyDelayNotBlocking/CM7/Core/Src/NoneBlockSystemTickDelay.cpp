@@ -6,5 +6,6 @@ void NoneBlockSystemTickDelay::StartNewDelay(uint16_t p_Delay) {
 }
 
 uint8_t NoneBlockSystemTickDelay::CheckDelayExpired() {
-	return ((HAL_GetTick() - m_InitialSysTick) >= m_DesiredDelay);
+	int32_t currentTickValue = HAL_GetTick();
+	return ((currentTickValue - m_InitialSysTick) >= m_DesiredDelay);
 }

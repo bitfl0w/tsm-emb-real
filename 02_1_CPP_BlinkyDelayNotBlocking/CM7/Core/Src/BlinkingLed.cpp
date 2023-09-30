@@ -27,5 +27,6 @@ void BlinkingLed::SetFrequency(float p_Frequency) {
 void BlinkingLed::ProcessBlinking() {
 	if(m_NoneBlockSystemTickDelay.CheckDelayExpired()) {
 		m_STM32H7Led.ToggleLed();
+		m_NoneBlockSystemTickDelay.StartNewDelay(UINT16_C(1000.0f/(2 * m_Frequency)));
 	}
 }
