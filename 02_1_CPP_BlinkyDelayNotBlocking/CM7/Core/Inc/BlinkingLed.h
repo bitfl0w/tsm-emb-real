@@ -5,7 +5,7 @@
 
 #pragma once
 
-class BlinkingLed : STM32H7Led, NoneBlockSystemTickDelay {
+class BlinkingLed: NoneBlockSystemTickDelay {
 private:
 	float m_Frequency;
 	uint8_t m_DutyCycle;
