@@ -1,7 +1,6 @@
 #include "stm32h7xx_hal.h"
 
-#ifndef _CUSTOM_PUTCHAR_H_
-#define _CUSTOM_PUTCHAR_H_
+#pragma once
 
 extern UART_HandleTypeDef huart3;
 
@@ -19,4 +18,4 @@ void _putchar(char character) {
 }
 #endif
 
-#endif
+// EOF
