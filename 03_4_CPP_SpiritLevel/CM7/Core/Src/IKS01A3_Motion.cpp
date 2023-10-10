@@ -56,8 +56,19 @@ void IKS01A3_Motion::UpdateValues(uint32_t p_Instance, uint32_t p_Function, bool
 
 #ifdef VECTOR_SOLUTION
 		if(RingBufferAxisX.size() >= ARRAY_SIZE) {
-
+			RingBufferAxisX.erase(RingBufferAxisX.begin());
 		}
+		RingBufferAxisX.push_back(AxisValues.x);
+
+		if(RingBufferAxisY.size() >= ARRAY_SIZE) {
+			RingBufferAxisY.erase(RingBufferAxisY.begin());
+		}
+		RingBufferAxisY.push_back(AxisValues.y);
+
+		if(RingBufferAxisZ.size() >= ARRAY_SIZE) {
+			RingBufferAxisZ.erase(RingBufferAxisZ.begin());
+		}
+		RingBufferAxisZ.push_back(AxisValues.z);
 #endif
 	}
 }

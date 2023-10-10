@@ -1,6 +1,7 @@
 #include <stdint.h>
 #include <array>
 #include <vector>
+#include "util_ring_allocator.h"
 #include "stm32h7xx_hal.h"
 #include "iks01a3_motion_sensors.h"
 #include "cpp_main.h"
@@ -31,9 +32,9 @@ private:
 #endif
 
 #ifdef VECTOR_SOLUTION
-	std::vector<int32_t> RingBufferAxisX;
-	std::vector<int32_t> RingBufferAxisY;
-	std::vector<int32_t> RingBufferAxisZ;
+	std::vector<int32_t, util::ring_allocator<int32_t>> RingBufferAxisX;
+	std::vector<int32_t, util::ring_allocator<int32_t>> RingBufferAxisY;
+	std::vector<int32_t, util::ring_allocator<int32_t>> RingBufferAxisZ;
 #endif
 };
 
