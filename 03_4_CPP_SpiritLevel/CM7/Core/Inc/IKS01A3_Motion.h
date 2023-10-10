@@ -1,12 +1,15 @@
 #include <stdint.h>
 #include <array>
+#include <vector>
 #include "stm32h7xx_hal.h"
 #include "iks01a3_motion_sensors.h"
+#include "cpp_main.h"
 
 class IKS01A3_Motion {
 public:
-	static constexpr int ARRAY_SIZE = 6;
-	// constructor
+	static constexpr int ARRAY_SIZE = 10;
+
+	// constructors
 	IKS01A3_Motion();
 
 	// methods
@@ -21,8 +24,16 @@ public:
 private:
 	IKS01A3_MOTION_SENSOR_Axes_t AxisValues;
 	IKS01A3_MOTION_SENSOR_Axes_t AxisOffsets;
+#ifdef ARRAY_SOLUTION
 	std::array<int32_t, ARRAY_SIZE> RingBufferAxisX;
 	std::array<int32_t, ARRAY_SIZE> RingBufferAxisY;
 	std::array<int32_t, ARRAY_SIZE> RingBufferAxisZ;
+#endif
+
+#ifdef VECTOR_SOLUTION
+	std::vector<int32_t> RingBufferAxisX;
+	std::vector<int32_t> RingBufferAxisY;
+	std::vector<int32_t> RingBufferAxisZ;
+#endif
 };
 

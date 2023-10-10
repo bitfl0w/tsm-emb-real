@@ -43,14 +43,22 @@ void IKS01A3_Motion::UpdateValues(uint32_t p_Instance, uint32_t p_Function, bool
 	AxisValues.z = NewAxisValues.z + AxisOffsets.z;
 
 	if(AddToRingBuffer) {
+#ifdef ARRAY_SOLUTION
 		std::rotate(RingBufferAxisX.begin(), RingBufferAxisX.begin()+1, RingBufferAxisX.end());
-		RingBufferAxisX[5] = AxisValues.x;
+		RingBufferAxisX[ARRAY_SIZE-1] = AxisValues.x;
 
 		std::rotate(RingBufferAxisY.begin(), RingBufferAxisY.begin()+1, RingBufferAxisY.end());
-		RingBufferAxisY[5] = AxisValues.y;
+		RingBufferAxisY[ARRAY_SIZE-1] = AxisValues.y;
 
 		std::rotate(RingBufferAxisZ.begin(), RingBufferAxisZ.begin()+1, RingBufferAxisZ.end());
-		RingBufferAxisZ[5] = AxisValues.z;
+		RingBufferAxisZ[ARRAY_SIZE-1] = AxisValues.z;
+#endif
+
+#ifdef VECTOR_SOLUTION
+		if(RingBufferAxisX.size() >= ARRAY_SIZE) {
+
+		}
+#endif
 	}
 }
 
