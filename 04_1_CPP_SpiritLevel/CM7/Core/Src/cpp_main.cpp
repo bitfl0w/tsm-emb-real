@@ -28,7 +28,7 @@ void cpp_main() {
 		}
 
 		// update delay
-		if((HAL_GetTick() - lastGetTick) >= 100) {
+		if((HAL_GetTick() - lastGetTick) >= 500) {
 			lastGetTick = HAL_GetTick();
 
 			MySensorLevel.UpdateValues();

@@ -11,12 +11,6 @@ IKS01A3_Motion::IKS01A3_Motion() {
 	AxisOffsets.x = 0;
 	AxisOffsets.y = 0;
 	AxisOffsets.z = 0;
-
-	// initialize the ringbuffer
-#ifdef ARRAY_SOLUTION
-	std::fill(std::begin(RingBufferAxisX), std::end(RingBufferAxisX), 0);
-	std::fill(std::begin(RingBufferAxisY), std::end(RingBufferAxisY), 0);
-	std::fill(std::begin(RingBufferAxisZ), std::end(RingBufferAxisZ), 0);
 }
 
 // public method definitions

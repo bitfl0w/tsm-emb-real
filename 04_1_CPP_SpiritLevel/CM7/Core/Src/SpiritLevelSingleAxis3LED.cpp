@@ -20,8 +20,26 @@ void SpiritLevelSingleAxis3LED::UpdateValues(void) {
 void SpiritLevelSingleAxis3LED::ShowValues(bool SendToVCP) {
 	int32_t xVal, yVal, zVal;
 	MyAccGyroSensor.Acc.GetAvgValues(&xVal, &yVal, &zVal);
+
+	IKS01A3_Motion::StatisticalValues_t StatValX;
+	IKS01A3_Motion::StatisticalValues_t StatValY;
+	IKS01A3_Motion::StatisticalValues_t StatValZ;
+	MyAccGyroSensor.Acc.GetStatVal(&StatValX, &StatValY, &StatValZ);
+
 	if(SendToVCP) {
-		printf("   ACC: %+07i %+07i %+07i\r\n", xVal, yVal, zVal);
+		printf("          : %+07i %+07i %+07i\r\n", xVal, yVal, zVal);
+		printf("   ACC Min: %+07i %+07i %+07i\r\n",
+				StatValX.find(IKS01A3_Motion::EStatisticalValuesEnum::Min)->second,
+				StatValY.find(IKS01A3_Motion::EStatisticalValuesEnum::Min)->second,
+				StatValZ.find(IKS01A3_Motion::EStatisticalValuesEnum::Min)->second);
+		printf("   ACC Max: %+07i %+07i %+07i\r\n",
+				StatValX.find(IKS01A3_Motion::EStatisticalValuesEnum::Max)->second,
+				StatValY.find(IKS01A3_Motion::EStatisticalValuesEnum::Max)->second,
+				StatValZ.find(IKS01A3_Motion::EStatisticalValuesEnum::Max)->second);
+		printf("   ACC Avg: %+07i %+07i %+07i\r\n\r\n",
+				StatValX.find(IKS01A3_Motion::EStatisticalValuesEnum::Avg)->second,
+				StatValY.find(IKS01A3_Motion::EStatisticalValuesEnum::Avg)->second,
+				StatValZ.find(IKS01A3_Motion::EStatisticalValuesEnum::Avg)->second);
 	}
 
 	// set spirit level LEDs
@@ -41,10 +59,10 @@ void SpiritLevelSingleAxis3LED::ShowValues(bool SendToVCP) {
 		}
 	}
 
-	MyAccGyroSensor.Gyro.GetAvgValues(&xVal, &yVal, &zVal);
-	if(SendToVCP) {
-		printf("   GYR: %+07i %+07i %+07i\r\n\r\n", xVal, yVal, zVal);
-	}
+//	MyAccGyroSensor.Gyro.GetAvgValues(&xVal, &yVal, &zVal);
+//	if(SendToVCP) {
+//		printf("   GYR: %+07i %+07i %+07i\r\n\r\n", xVal, yVal, zVal);
+//	}
 }
 
 void SpiritLevelSingleAxis3LED::SetZero() {
