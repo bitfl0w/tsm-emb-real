@@ -150,9 +150,11 @@ Error_Handler();
   MX_USART3_UART_Init();
   MX_USB_OTG_FS_PCD_Init();
   /* USER CODE BEGIN 2 */
-  uint32_t lastGetTick;
-  uint8_t TakeSem = 1;
-  HAL_StatusTypeDef res;
+  uint32_t lastGetTick = 0;
+  char* MessageM7 = "This is a message from CM7!\r\n";
+  char* InitFinishedM7 = "Init CM7 finished.\r\n";
+  HAL_UART_Transmit(&huart3,(uint8_t*)InitFinishedM7, strlen(InitFinishedM7), 100); //Transmit data in interrupt mode
+
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -162,16 +164,16 @@ Error_Handler();
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-	if((HAL_GetTick() - lastGetTick) >= 500) {
-		if(TakeSem) {
-			res = HAL_HSEM_Take(1, 7);
-			TakeSem = 0;
-		} else {
-			HAL_HSEM_Release(1,  7);
-			TakeSem = 1;
+	if((HAL_GetTick() - lastGetTick) >= 100) {
+//		// send a message from the M7
+		while(HAL_HSEM_Take(1, 7) == HAL_ERROR) {
+			// wait for semaphore to be free
 		}
 
 		HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
+		//HAL_UART_Transmit(&huart3, (uint8_t*)MessageM7, strlen(MessageM7), 100);
+		HAL_HSEM_Release(1,  7);
+
 		lastGetTick = HAL_GetTick();
 	}
   }
