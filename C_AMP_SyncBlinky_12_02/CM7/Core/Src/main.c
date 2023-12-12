@@ -152,7 +152,6 @@ Error_Handler();
   /* USER CODE BEGIN 2 */
   uint32_t lastGetTick;
   uint8_t TakeSem = 1;
-  HAL_StatusTypeDef res;
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -164,7 +163,7 @@ Error_Handler();
     /* USER CODE BEGIN 3 */
 	if((HAL_GetTick() - lastGetTick) >= 500) {
 		if(TakeSem) {
-			res = HAL_HSEM_Take(1, 7);
+			HAL_HSEM_Take(1, 7);
 			TakeSem = 0;
 		} else {
 			HAL_HSEM_Release(1,  7);
