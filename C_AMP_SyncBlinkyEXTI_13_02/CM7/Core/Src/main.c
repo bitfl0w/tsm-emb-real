@@ -153,8 +153,6 @@ Error_Handler();
   uint32_t lastGetTick;
   uint8_t TakeSem = 1;
   HAL_StatusTypeDef res;
-  HAL_EXTI_D1_EventInputConfig(EXTI_LINE0, EXTI_MODE_IT, DISABLE); // disable interrupt receival on CM7
-  HAL_EXTI_D2_EventInputConfig(EXTI_LINE0, EXTI_MODE_IT, ENABLE);  // enable interrupt receival on CM4
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -174,6 +172,9 @@ Error_Handler();
 			HAL_HSEM_Release(1,  7);
 			TakeSem = 1;
 			HAL_GPIO_WritePin(LD1_GPIO_Port, LD1_Pin, GPIO_PIN_RESET);
+
+			HAL_EXTI_D1_EventInputConfig(EXTI_LINE0, EXTI_MODE_IT, DISABLE); // disable interrupt receival on CM7
+			HAL_EXTI_D2_EventInputConfig(EXTI_LINE0, EXTI_MODE_IT, ENABLE);  // enable interrupt receival on CM4
 			HAL_EXTI_GenerateSWInterrupt(EXTI_LINE0); // trigger software interrupt from CM7 to CM4
 		}
 
