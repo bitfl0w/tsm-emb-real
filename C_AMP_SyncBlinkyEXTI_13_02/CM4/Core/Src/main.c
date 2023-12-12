@@ -285,7 +285,10 @@ static void MX_GPIO_Init(void)
 }
 
 /* USER CODE BEGIN 4 */
-
+void EXTI0_IRQHandler(void) {
+	HAL_EXTI_D2_ClearFlag(EXTI_LINE0);
+	HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
+}
 /* USER CODE END 4 */
 
 /**
