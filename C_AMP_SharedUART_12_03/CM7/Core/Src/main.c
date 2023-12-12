@@ -152,8 +152,8 @@ Error_Handler();
   /* USER CODE BEGIN 2 */
   uint32_t lastGetTick = 0;
   char* MessageM7 = "This is a message from CM7!\r\n";
-  char* InitFinishedM7 = "Init CM7 finished.\r\n";
-  HAL_UART_Transmit(&huart3,(uint8_t*)InitFinishedM7, strlen(InitFinishedM7), 100); //Transmit data in interrupt mode
+//  char* InitFinishedM7 = "Init CM7 finished.\r\n";
+//  HAL_UART_Transmit(&huart3,(uint8_t*)InitFinishedM7, strlen(InitFinishedM7), 100); //Transmit data in interrupt mode
 
   /* USER CODE END 2 */
 
@@ -171,7 +171,7 @@ Error_Handler();
 		}
 
 		HAL_GPIO_TogglePin(LD1_GPIO_Port, LD1_Pin);
-		//HAL_UART_Transmit(&huart3, (uint8_t*)MessageM7, strlen(MessageM7), 100);
+		HAL_UART_Transmit(&huart3, (uint8_t*)MessageM7, strlen(MessageM7), 500);
 		HAL_HSEM_Release(1,  7);
 
 		lastGetTick = HAL_GetTick();

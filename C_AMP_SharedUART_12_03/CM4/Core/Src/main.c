@@ -127,8 +127,8 @@ int main(void)
   MX_USART3_UART_Init();
   char* MessageM4 = "This is a message from CM4!\r\n";
   uint32_t lastGetTick = 0;
-  char* InitFinishedM4 = "Init M4 finished.\n";
-  HAL_UART_Transmit(&huart3, (uint8_t*)InitFinishedM4, strlen(InitFinishedM4), 100);
+//  char* InitFinishedM4 = "Init M4 finished.\n";
+//  HAL_UART_Transmit(&huart3, (uint8_t*)InitFinishedM4, strlen(InitFinishedM4), 100);
   /* USER CODE END 2 */
 
   /* Infinite loop */
@@ -138,18 +138,18 @@ int main(void)
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */
-  if((HAL_GetTick() - lastGetTick) >= 50) {
+	if((HAL_GetTick() - lastGetTick) >= 50) {
   //		// send a message from the M7
-  		while(HAL_HSEM_Take(1, 7) == HAL_ERROR) {
-  			// wait for semaphore to be free
-  		}
+		while(HAL_HSEM_Take(1, 7) == HAL_ERROR) {
+			// wait for semaphore to be free
+		}
 
-	  		HAL_UART_Transmit(&huart3, (uint8_t*)MessageM4, strlen(MessageM4), 100);
-	  		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
-	  		HAL_HSEM_Release(1, 7);
+		HAL_UART_Transmit(&huart3, (uint8_t*)MessageM4, strlen(MessageM4), 500);
+		HAL_GPIO_TogglePin(LD2_GPIO_Port, LD2_Pin);
+		HAL_HSEM_Release(1, 7);
 
-	  		lastGetTick = HAL_GetTick();
-	  	}
+		lastGetTick = HAL_GetTick();
+    }
   }
   /* USER CODE END 3 */
 }
