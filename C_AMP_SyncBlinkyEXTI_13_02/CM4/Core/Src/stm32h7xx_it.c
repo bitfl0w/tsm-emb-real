@@ -199,5 +199,8 @@ void SysTick_Handler(void)
 /******************************************************************************/
 
 /* USER CODE BEGIN 1 */
-
+void EXTI0_IRQHandler(void) {
+	HAL_EXTI_D2_ClearFlag(EXTI_LINE0);
+	HAL_GPIO_TogglePin(LD3_GPIO_Port, LD3_Pin);
+}
 /* USER CODE END 1 */
