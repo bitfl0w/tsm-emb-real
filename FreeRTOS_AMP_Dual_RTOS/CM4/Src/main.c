@@ -37,6 +37,7 @@
 /* Set to pdFALSE if any errors are detected.  Used to inform the check task
 that something might be wrong. */
 BaseType_t xDemoStatus = pdPASS;
+UART_HandleTypeDef huart3;
 
 /* Private function prototypes -----------------------------------------------*/
 /* Private functions ---------------------------------------------------------*/
@@ -89,6 +90,8 @@ int main(void)
   {
     Error_Handler();
   }
+
+  MX_USART3_UART_Init();
 
   for( x = 0; x < mbaNUMBER_OF_CORE_2_TASKS; x++ )
   {    
@@ -144,6 +147,8 @@ static void prvCore2Tasks( void *pvParameters )
     if( strcmp( cReceivedString, cExpectedString ) == 0 )
     {
       ( ulCycleCounters[ x ] )++;
+//      HAL_UART_Transmit(&huart3, (uint8_t*)cReceivedString, strlen(cReceivedString), 100);
+      HAL_UART_Transmit(&huart3, (uint8_t*)"A\n", strlen(2), 100);
     }
     else
     {
@@ -224,7 +229,44 @@ void vApplicationGetIdleTaskMemory( StaticTask_t **ppxIdleTaskTCBBuffer, uint32_
       *pulIdleTaskStackSize = configMINIMAL_STACK_SIZE;
 }
 
+void MX_USART3_UART_Init(void)
+{
 
+  /* USER CODE BEGIN USART3_Init 0 */
+
+  /* USER CODE END USART3_Init 0 */
+
+  /* USER CODE BEGIN USART3_Init 1 */
+
+  /* USER CODE END USART3_Init 1 */
+  huart3.Instance = USART3;
+  huart3.Init.BaudRate = 9600;
+  huart3.Init.WordLength = UART_WORDLENGTH_8B;
+  huart3.Init.StopBits = UART_STOPBITS_1;
+  huart3.Init.Parity = UART_PARITY_NONE;
+  huart3.Init.Mode = UART_MODE_TX_RX;
+  huart3.Init.HwFlowCtl = UART_HWCONTROL_NONE;
+  huart3.Init.OverSampling = UART_OVERSAMPLING_16;
+  huart3.Init.OneBitSampling = UART_ONE_BIT_SAMPLE_DISABLE;
+  huart3.Init.ClockPrescaler = UART_PRESCALER_DIV1;
+  huart3.AdvancedInit.AdvFeatureInit = UART_ADVFEATURE_NO_INIT;
+  if (HAL_UART_Init(&huart3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetTxFifoThreshold(&huart3, UART_TXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_SetRxFifoThreshold(&huart3, UART_RXFIFO_THRESHOLD_1_8) != HAL_OK)
+  {
+    Error_Handler();
+  }
+  if (HAL_UARTEx_DisableFifoMode(&huart3) != HAL_OK)
+  {
+    Error_Handler();
+  }
+}
 
 
 #ifdef  USE_FULL_ASSERT

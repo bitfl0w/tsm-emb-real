@@ -36,7 +36,6 @@
 
 /* Private variables ---------------------------------------------------------*/
 
-
 /* Private function prototypes -----------------------------------------------*/
 static void SystemClock_Config(void);
 static void CPU_CACHE_Enable(void);
@@ -158,6 +157,9 @@ static void prvCore1Task( void *pvParameters )
       
       /* Delay before repeating */
       vTaskDelay( xDelay );
+//      const char* Message = "Message from M7 Task";
+//      xMessageBufferSend(xDataMessageBuffers[0], (void*)Message, strlen(Message), 100);
+//      sbSEND_COMPLETED(xDataMessageBuffers[0]);
     }
 
     ulNextValue++;
@@ -365,6 +367,8 @@ static void SystemClock_Config(void)
   HAL_EnableCompensationCell();
 
 }
+
+
 
 /**
 * @brief  CPU L1-Cache enable.
