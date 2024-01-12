@@ -87,6 +87,17 @@ static void MX_USB_OTG_FS_PCD_Init(void);
 
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
+int __io_putchar(int ch) {
+//    uint8_t c[1];
+//    c[0] = ch & 0x00FF;
+//    HAL_UART_Transmit(&huart3, &*c, 1, HAL_MAX_DELAY);
+//    return ch;
+}
+
+int _write(int file, char *ptr, int len) {
+    HAL_UART_Transmit(&huart3, (uint8_t *)ptr, len, HAL_MAX_DELAY);
+    return len;
+}
 
 /* USER CODE END 0 */
 
