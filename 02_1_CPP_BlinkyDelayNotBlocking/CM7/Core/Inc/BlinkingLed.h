@@ -5,12 +5,12 @@
 
 #pragma once
 
-class BlinkingLed: NoneBlockSystemTickDelay {
+class BlinkingLed: NonBlockingSystemTickDelay {
 private:
 	float m_Frequency;
 	uint8_t m_DutyCycle;
 	STM32H7Led m_STM32H7Led;
-	NoneBlockSystemTickDelay m_NoneBlockSystemTickDelay;
+	NonBlockingSystemTickDelay m_NoneBlockSystemTickDelay;
 public:
 	void SetDutyCycle(uint8_t p_DutyCycle);
 	void SetFrequency(float p_Frequency);
@@ -37,12 +37,12 @@ public:
 		m_Frequency = mFrequency;
 	}
 
-	const NoneBlockSystemTickDelay& getMNoneBlockSystemTickDelay() const {
+	const NonBlockingSystemTickDelay& getMNoneBlockSystemTickDelay() const {
 		return m_NoneBlockSystemTickDelay;
 	}
 
 	void setMNoneBlockSystemTickDelay(
-			const NoneBlockSystemTickDelay &mNoneBlockSystemTickDelay) {
+			const NonBlockingSystemTickDelay &mNoneBlockSystemTickDelay) {
 		m_NoneBlockSystemTickDelay = mNoneBlockSystemTickDelay;
 	}
 

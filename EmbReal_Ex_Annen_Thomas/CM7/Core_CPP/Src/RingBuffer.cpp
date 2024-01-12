@@ -23,7 +23,6 @@ void RingBuffer::Append(uint32_t NewValue) {
 		Buffer.erase(Buffer.begin());
 	}
 	Buffer.push_back(NewValue);
-	volatile uint32_t size = Buffer.size();
 }
 
 uint32_t RingBuffer::GetAverageCount() const {
