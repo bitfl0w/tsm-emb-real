@@ -5,9 +5,6 @@
  *      Author: Thomas
  */
 
-
-
-
 #include "RingBuffer.h"
 
 // constructor

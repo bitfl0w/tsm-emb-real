@@ -8,7 +8,7 @@
 #include "NonBlockingDelay.h"
 
 void cpp_main() {
-	BlinkingLed MyLed1 = BlinkingLed(LD1_GPIO_Port, LD1_Pin, (1/0.05f), 50);
+	BlinkingLed MyLed1 = BlinkingLed(LD1_GPIO_Port, LD1_Pin, (1/0.50f), 50);
 	RingBuffer MyBuf = RingBuffer(10);
 //	auto LoopCount = 0;
 	NonBlockingDelay MyDelay = NonBlockingDelay();

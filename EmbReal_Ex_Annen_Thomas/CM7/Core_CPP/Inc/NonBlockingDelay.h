@@ -7,7 +7,7 @@ public:
 	NonBlockingDelay();
 	void StartNewDelay(uint16_t p_Delay);
 	uint8_t CheckDelayExpired();
-private:
+protected:
 	uint16_t m_DesiredDelay;
 	uint32_t m_InitialSysTick;
 };
