@@ -2,6 +2,7 @@
 #include "printf.h"
 #include "stm32h7xx_hal.h"
 #include "main.h"
+#include "util_ring_allocator.h"
 
 SpiritLevelSingleAxis3LED::SpiritLevelSingleAxis3LED() :
 	LedNegAngle(LD1_GPIO_Port, LD1_Pin),
@@ -27,11 +28,20 @@ void SpiritLevelSingleAxis3LED::ShowValues(bool SendToVCP) {
 	MyAccGyroSensor.Acc.GetStatVal(&StatValX, &StatValY, &StatValZ);
 
 	if(SendToVCP) {
-		printf("          : %+07i %+07i %+07i\r\n", xVal, yVal, zVal);
-		printf("   ACC Min: %+07i %+07i %+07i\r\n",
-				StatValX.find(IKS01A3_Motion::EStatisticalValuesEnum::Min)->second,
-				StatValY.find(IKS01A3_Motion::EStatisticalValuesEnum::Min)->second,
-				StatValZ.find(IKS01A3_Motion::EStatisticalValuesEnum::Min)->second);
+		std::basic_string<char, std::char_traits<char>, util::ring_allocator<char>> MyStringObj;
+//		MyStringObj = "          : %+07i %+07i %+07i\r\n";
+//		printf(MyStringObj, xVal, yVal, zVal);
+		uint8_t SomeInteger = 5;
+		MyStringObj = "Special ACC Min X, Y, Z:";
+		MyStringObj.append(std::to_string(SomeInteger).c_str());
+		MyStringObj.append("\t; ");
+		MyStringObj.append(std::to_string(StatValY.find(IKS01A3_Motion::EStatisticalValuesEnum::Min)->second).c_str());
+		MyStringObj.append("\t; ");
+		MyStringObj.append(std::to_string(StatValZ.find(IKS01A3_Motion::EStatisticalValuesEnum::Min)->second).c_str());
+		MyStringObj.append("\r\n");
+		printf(MyStringObj.c_str());
+
+		// classcial solution
 		printf("   ACC Max: %+07i %+07i %+07i\r\n",
 				StatValX.find(IKS01A3_Motion::EStatisticalValuesEnum::Max)->second,
 				StatValY.find(IKS01A3_Motion::EStatisticalValuesEnum::Max)->second,
