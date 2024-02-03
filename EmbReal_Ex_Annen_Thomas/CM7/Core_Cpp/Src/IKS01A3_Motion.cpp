@@ -4,7 +4,10 @@
 #include <iostream> // for cout
 
 // constructor
-IKS01A3_Motion::IKS01A3_Motion() {
+IKS01A3_Motion::IKS01A3_Motion(uint32_t p_Function, uint32_t p_Instance) {
+	IKS01A3_Motion::Function = p_Function;
+	IKS01A3_Motion::Instance = p_Instance;
+
 	AxisValues.x = 0;
 	AxisValues.y = 0;
 	AxisValues.z = 0;
@@ -19,12 +22,12 @@ IKS01A3_Motion::IKS01A3_Motion() {
 }
 
 // public method definitions
-void IKS01A3_Motion::Init(uint32_t p_Instance, uint32_t p_Function) {
-	IKS01A3_MOTION_SENSOR_Init(p_Instance, p_Function);
+void IKS01A3_Motion::Init() {
+	IKS01A3_MOTION_SENSOR_Init(Instance, Function);
 }
 
-void IKS01A3_Motion::Enable(uint32_t p_Instance, uint32_t p_Function) {
-	IKS01A3_MOTION_SENSOR_Enable(p_Instance, p_Function);
+void IKS01A3_Motion::Enable() {
+	IKS01A3_MOTION_SENSOR_Enable(Instance, Function);
 }
 
 void IKS01A3_Motion::SetZero(void) {
@@ -33,9 +36,9 @@ void IKS01A3_Motion::SetZero(void) {
 	AxisOffsets.z = -AxisValues.z;
 }
 
-void IKS01A3_Motion::UpdateValues(uint32_t p_Instance, uint32_t p_Function, bool AddToRingBuffer) {
+void IKS01A3_Motion::UpdateValues(bool AddToRingBuffer) {
 	IKS01A3_MOTION_SENSOR_Axes_t NewAxisValues;
-	IKS01A3_MOTION_SENSOR_GetAxes(p_Instance, p_Function, &NewAxisValues);
+	IKS01A3_MOTION_SENSOR_GetAxes(Instance, Function, &NewAxisValues);
 
 	// add offset values before putting values to ringbuffer
 	AxisValues.x = NewAxisValues.x + AxisOffsets.x;
@@ -74,7 +77,7 @@ void IKS01A3_Motion::UpdateValues(uint32_t p_Instance, uint32_t p_Function, bool
 }
 
 
-void IKS01A3_Motion::GetValue(uint32_t p_Instance, uint32_t p_Function, int32_t *p_XAxis, int32_t *p_YAxis, int32_t *p_ZAxis) {
+void IKS01A3_Motion::GetValue(int32_t *p_XAxis, int32_t *p_YAxis, int32_t *p_ZAxis) {
 	*p_XAxis = AxisValues.x;
 	*p_YAxis = AxisValues.y;
 	*p_ZAxis = AxisValues.z;

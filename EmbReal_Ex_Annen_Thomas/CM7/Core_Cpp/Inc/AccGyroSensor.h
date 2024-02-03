@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdint>
 #include "IKS01A3_Motion.h"
 
@@ -9,6 +11,7 @@ private:
 	const uint32_t FUNCTION_GYRO = MOTION_GYRO;
 
 public:
+	AccGyroSensor();
 	IKS01A3_Motion Gyro;
 	IKS01A3_Motion Acc;
 

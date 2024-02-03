@@ -1,23 +1,29 @@
 #include "AccGyroSensor.h"
+#include "IKS01A3_Motion.h"
+
+AccGyroSensor::AccGyroSensor() {
+	Acc	 = IKS01A3_Motion::IKS01A3_Motion(FUNCTION_ACC, INSTANCE);
+	Gyro = IKS01A3_Motion::IKS01A3_Motion(FUNCTION_GYRO, INSTANCE);
+}
 
 void AccGyroSensor::InitSensor(void) {
-	Acc.Init(INSTANCE, FUNCTION_INIT_ACC_GYRO);
-	Acc.Enable(INSTANCE, FUNCTION_INIT_ACC_GYRO);
+	Acc.Init();
+	Acc.Enable();
 //	Gyro.Init(INSTANCE, FUNCTION_GYRO);
 //	Gyro.Enable(INSTANCE, FUNCTION_GYRO);
 	HAL_Delay(100);
 
 	// perform initial readout
-	Acc.UpdateValues(INSTANCE, FUNCTION_ACC, false);
-	Gyro.UpdateValues(INSTANCE, FUNCTION_GYRO, false);
+	Acc.UpdateValues(false);
+	Gyro.UpdateValues(false);
 
 	Acc.SetZero();
 	Gyro.SetZero();
 }
 
 void AccGyroSensor::UpdateValues(void) {
-	Acc.UpdateValues(INSTANCE, FUNCTION_ACC);
-	Gyro.UpdateValues(INSTANCE, FUNCTION_GYRO);
+	Acc.UpdateValues();
+	Gyro.UpdateValues();
 }
 
 void AccGyroSensor::SetZero(void) {

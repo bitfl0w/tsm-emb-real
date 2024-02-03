@@ -1,28 +1,32 @@
+#pragma once
+
 #include <stdint.h>
 #include <array>
 #include <vector>
 #include "util_ring_allocator.h"
 #include "stm32h7xx_hal.h"
 #include "iks01a3_motion_sensors.h"
-#include "cpp_main.h"
 
 class IKS01A3_Motion {
 public:
 	static constexpr int ARRAY_SIZE = 10;
 
 	// constructors
-	IKS01A3_Motion();
+	IKS01A3_Motion(uint32_t p_Function, uint32_t p_Instance);
 
 	// methods
-	void Init(uint32_t p_Instance, uint32_t p_Function);
-	void Enable(uint32_t p_Instance, uint32_t p_Function);
+	void Init();
+	void Enable();
 	void SetZero(void);
-	void UpdateValues(uint32_t p_Instance, uint32_t p_Function, bool AddToRingBuffer = true);
-	void GetValue(uint32_t p_Instance, uint32_t p_Function, int32_t *p_XAxis, int32_t *p_YAxis, int32_t *p_ZAxis);
+	void UpdateValues(bool AddToRingBuffer = true);
+	void GetValue(int32_t *p_XAxis, int32_t *p_YAxis, int32_t *p_ZAxis);
 	void GetAvgValues(int32_t *p_XAxis, int32_t *p_YAxis, int32_t *p_ZAxis);
 	void PrintValuesToConsole();
 
 private:
+	uint32_t Instance;
+	uint32_t Function;
+
 	IKS01A3_MOTION_SENSOR_Axes_t AxisValues;
 	IKS01A3_MOTION_SENSOR_Axes_t AxisOffsets;
 #ifdef ARRAY_SOLUTION
