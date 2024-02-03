@@ -65,32 +65,39 @@ void IKS01A3_Motion::UpdateValues(uint32_t p_Instance, uint32_t p_Function, bool
 		}
 		RingBufferAxisY.push_back(AxisValues.y);
 
+
+//		static int count = 0;
+//		std::cout << "Adding Z  : " << count << "\r\n";
+//		std::cout << "Size Buf Z: " << RingBufferAxisZ.size() << "\r\n";
 		if(RingBufferAxisZ.size() >= ARRAY_SIZE) {
+//			std::cout << "Evicting from Buf Z: " << *RingBufferAxisZ.begin() << "\r\n";
 			RingBufferAxisZ.erase(RingBufferAxisZ.begin());
 		}
 		RingBufferAxisZ.push_back(AxisValues.z);
+
+		std::cout << "Current Buffer Content:\r\n";
+		uint32_t Position = 0;
+		for(auto iterator = RingBufferAxisZ.cbegin(); iterator < RingBufferAxisZ.cend(); iterator++) {
+			std::cout << "Idx " << Position << ": " << *iterator << "\r\n";
+			Position++;
+		}
+//		count++;
+
 #endif
 	}
 }
 
+void IKS01A3_Motion::GetRingBufferAxisZ(std::vector<int32_t, util::ring_allocator<int32_t>> *BufCopy) {
+	for (int i=0; i<RingBufferAxisZ.size(); i++) {
+		BufCopy->push_back(RingBufferAxisZ[i]);
+	}
+
+}
 
 void IKS01A3_Motion::GetValue(uint32_t p_Instance, uint32_t p_Function, int32_t *p_XAxis, int32_t *p_YAxis, int32_t *p_ZAxis) {
 	*p_XAxis = AxisValues.x;
 	*p_YAxis = AxisValues.y;
 	*p_ZAxis = AxisValues.z;
-}
-
-int32_t GetAv(std::array<int32_t, 6> &arr) {
-	if(!arr.empty()) {
-		int64_t Sum = 0;
-		int NumberOfElements = 0;
-		for(auto iterator = arr.cbegin(); iterator < arr.cend(); iterator++) {
-			Sum += *iterator;
-			NumberOfElements++;
-		}
-		return Sum/NumberOfElements;
-	}
-	return 0;
 }
 
 void IKS01A3_Motion::GetAvgValues(int32_t *p_XAxis, int32_t *p_YAxis, int32_t *p_ZAxis) {

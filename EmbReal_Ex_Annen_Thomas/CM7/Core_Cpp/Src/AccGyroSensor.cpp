@@ -17,7 +17,7 @@ void AccGyroSensor::InitSensor(void) {
 
 void AccGyroSensor::UpdateValues(void) {
 	Acc.UpdateValues(INSTANCE, FUNCTION_ACC);
-	Gyro.UpdateValues(INSTANCE, FUNCTION_GYRO);
+	//Gyro.UpdateValues(INSTANCE, FUNCTION_GYRO);
 }
 
 void AccGyroSensor::SetZero(void) {

@@ -21,6 +21,7 @@ public:
 	void GetValue(uint32_t p_Instance, uint32_t p_Function, int32_t *p_XAxis, int32_t *p_YAxis, int32_t *p_ZAxis);
 	void GetAvgValues(int32_t *p_XAxis, int32_t *p_YAxis, int32_t *p_ZAxis);
 	void PrintValuesToConsole();
+	void GetRingBufferAxisZ(std::vector<int32_t, util::ring_allocator<int32_t>> *BufCopy);
 
 private:
 	IKS01A3_MOTION_SENSOR_Axes_t AxisValues;
