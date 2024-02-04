@@ -1,9 +1,9 @@
+#pragma once
+
 #include <cstdint>
 #include "stm32h7xx_hal.h"
 #include "STM32H7Led.h" // we derivate from this class, therefore we need this include!
 #include "NonBlockingDelay.h" // dito
-
-#pragma once
 
 class BlinkingLed : public NonBlockingDelay {
 private:

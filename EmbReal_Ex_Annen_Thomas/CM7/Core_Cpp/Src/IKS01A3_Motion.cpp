@@ -75,12 +75,12 @@ void IKS01A3_Motion::UpdateValues(uint32_t p_Instance, uint32_t p_Function, bool
 		}
 		RingBufferAxisZ.push_back(AxisValues.z);
 
-		std::cout << "Current Buffer Content:\r\n";
-		uint32_t Position = 0;
-		for(auto iterator = RingBufferAxisZ.cbegin(); iterator < RingBufferAxisZ.cend(); iterator++) {
-			std::cout << "Idx " << Position << ": " << *iterator << "\r\n";
-			Position++;
-		}
+//		std::cout << "Current Buffer Content:\r\n";
+//		uint32_t Position = 0;
+//		for(auto iterator = RingBufferAxisZ.cbegin(); iterator < RingBufferAxisZ.cend(); iterator++) {
+//			std::cout << "Idx " << Position << ": " << *iterator << "\r\n";
+//			Position++;
+//		}
 //		count++;
 
 #endif

@@ -1,3 +1,5 @@
+#pragma once
+
 #include <cstdint>
 #include "IKS01A3_Motion.h"
 

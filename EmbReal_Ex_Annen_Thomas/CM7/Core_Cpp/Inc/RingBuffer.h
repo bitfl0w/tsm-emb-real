@@ -1,8 +1,8 @@
+#pragma once
+
 #include <vector>
 #include <numeric> // for accumulate
 #include "util_ring_allocator.h"
-
-#pragma once
 
 class RingBuffer {
 public:
