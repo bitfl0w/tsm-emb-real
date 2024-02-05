@@ -5,38 +5,50 @@
 #include "BlinkingLed.h"
 #include "AccGyroSensor.h"
 #include "EnvSensor.h"
+#include <array>
+#include <algorithm>
 
 void cpp_main() {
 	BlinkingLed MyLed1 = BlinkingLed(LD1_GPIO_Port, LD1_Pin, (1/5.0f), 50);
-	uint32_t count = 0;
 	AccGyroSensor MyAccGyroSensor;
 	MyAccGyroSensor.InitSensor();
 
-	const std::string CRLF = "\r\n";
-
 	EnvSensor MyEnvSensor;
 	MyEnvSensor.InitSensor();
+
+	// array sorting
+	std::array<uint32_t, 8> MyArray = { 0, 2, 6, 8, 3, 5, 1, 7 };
+	std::cout << "Unsorted container:" << std::endl;
+	for(auto i:MyArray) {
+	    std::cout << i << " ";
+	}
+	std::cout << std::endl << std::endl;
+
+	std::sort(std::begin(MyArray), std::end(MyArray));
+	std::cout << "Ascending sorted container:" << std::endl;
+	for(auto i:MyArray) {
+		std::cout << i << " ";
+	}
+	std::cout << std::endl << std::endl;
+
+	std::sort(std::begin(MyArray), std::end(MyArray), std::greater<uint32_t>());
+	std::cout << "Descending sorted container:" << std::endl;
+	for(auto i:MyArray) {
+		std::cout << i << " ";
+	}
+	std::cout << std::endl << std::endl;
 
 	while(1) {
 		if(MyLed1.CheckDelayExpired()) {
 			MyLed1.ProcessBlinking();
 			int32_t XAxis, YAxis, ZAxis;
 			MyAccGyroSensor.UpdateValues();
-
-//			std::vector<int32_t, util::ring_allocator<int32_t>> Copy;
-//			MyAccGyroSensor.Acc.GetRingBufferAxisZ(&Copy);
-//			for(auto iterator = Copy.cbegin(); iterator < Copy.cend(); iterator++) {
-//				std::cout << "Value: " << *iterator << CRLF;
-//			}
 			MyAccGyroSensor.Acc.GetAvgValues(&XAxis, &YAxis, &ZAxis);
-			//std::cout << "Toggled Led. Counter: " << count << CRLF;
-//			std::cout << "X: " << XAxis << "Y: " << YAxis << "; Z: " << ZAxis << CRLF;
-//			count++;
 
 			float Temperature;
 			MyEnvSensor.UpdateValues();
 			MyEnvSensor.Temp.GetAvgValues(&Temperature);
-			std::cout << "Averaged Temp: " << Temperature << CRLF;
+			std::cout << "Averaged Temp: " << Temperature << std::endl;
 		}
 	}
 }

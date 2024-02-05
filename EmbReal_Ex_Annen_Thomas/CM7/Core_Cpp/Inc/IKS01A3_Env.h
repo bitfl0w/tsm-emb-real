@@ -4,6 +4,7 @@
 #include <array>
 #include <vector>
 #include "util_ring_allocator.h"
+#include "util_ring_allocator_std.h"
 #include "stm32h7xx_hal.h"
 #include "iks01a3_env_sensors.h"
 #include "cpp_main.h"
@@ -27,7 +28,8 @@ private:
 	float Value;
 
 #ifdef VECTOR_SOLUTION
-	std::vector<float> RingBuffer;
+	std::vector<float, util::ring_allocator<float>> RingBuffer;
+	std::vector<int32_t, util::ring_allocator_std<int32_t>> RingBufferInt32; //
 #endif
 };
 
